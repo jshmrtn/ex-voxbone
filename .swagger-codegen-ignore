@@ -1,0 +1,6 @@
+/mix.exs
+/config/config.exs
+/test/test_helper.exs
+/lib/voxbone/connection.ex
+/README.md
+/.gitignore

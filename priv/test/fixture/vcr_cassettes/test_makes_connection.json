@@ -1,0 +1,40 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "***",
+        "user-agent": "Elixir"
+      },
+      "method": "get",
+      "options": {
+        "httpc_options": [],
+        "http_options": {
+          "autoredirect": "false"
+        }
+      },
+      "request_body": "",
+      "url": "https://sandbox.voxbone.com/ws-voxbone/services/rest/inventory/country?pageNumber=1&pageSize=1"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"countries\":[{\"countryCodeA3\":\"AUS\",\"countryName\":\"AUSTRALIA\",\"phoneCode\":61,\"hasStates\":false,\"hasRegulationRequirement\":false}],\"resultCount\":60}",
+      "headers": {
+        "connection": "Keep-Alive",
+        "date": "Thu, 01 Mar 2018 11:08:26 GMT",
+        "server": "Apache",
+        "vary": "User-Agent",
+        "content-length": "148",
+        "content-type": "application/json",
+        "keep-alive": "timeout=20, max=100"
+      },
+      "status_code": [
+        "HTTP/1.1",
+        200,
+        "OK"
+      ],
+      "type": "ok"
+    }
+  }
+]

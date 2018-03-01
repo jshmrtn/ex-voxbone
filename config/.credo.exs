@@ -5,10 +5,10 @@
       files: %{
         included: ["lib/", "test", "mix.exs"],
         excluded: [
-          "lib/art_core_api/api",
-          "lib/art_core_api/model",
-          "lib/art_core_api/request_builder.ex",
-          "lib/art_core_api/deserializer.ex"
+          "lib/voxbone/api",
+          "lib/voxbone/model",
+          "lib/voxbone/request_builder.ex",
+          "lib/voxbone/deserializer.ex"
         ]
       },
       checks: [
