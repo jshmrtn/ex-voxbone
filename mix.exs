@@ -8,6 +8,8 @@ defmodule Voxbone.MixProject do
       app: :voxbone,
       version: "0.1.0",
       elixir: "~> 1.6",
+      description: description(),
+      package: package(),
       start_permanent: Mix.env() == :prod,
       dialyzer: [
         ignore_warnings: "dialyzer.ignore-warnings"
@@ -22,6 +24,22 @@ defmodule Voxbone.MixProject do
   def application do
     [
       extra_applications: [:logger]
+    ]
+  end
+
+  defp description do
+    """
+    Elixir wrapper for Voxbone API.
+    """
+  end
+
+  defp package do
+    [
+      name: :voxbone,
+      files: ["lib", "mix.exs", "README*", "LICENSE"],
+      maintainers: ["airatel Inc.", "Jonatan Männchen"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/jshmrtn/ex-voxbone"}
     ]
   end
 
