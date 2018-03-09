@@ -7,7 +7,7 @@ defmodule Voxbone.ConnectionTest do
   alias Voxbone.Api.Inventory
   alias Voxbone.Model.ListCountryResponse
 
-  use ExVCR.Mock, adapter: ExVCR.Adapter.Httpc
+  use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
 
   setup do
     Application.put_env(:voxbone, :environment, :sandbox)
