@@ -11,19 +11,19 @@ defmodule Voxbone.Model.Attachment do
   defstruct [
     :headers,
     :object,
-    :contentType,
     :dataHandler,
+    :contentDisposition,
     :contentId,
-    :contentDisposition
+    :contentType
   ]
 
   @type t :: %__MODULE__{
           :headers => %{optional(String.t()) => [String.t()]},
           :object => Object,
-          :contentType => MediaType,
           :dataHandler => DataHandler,
+          :contentDisposition => ContentDisposition,
           :contentId => String.t(),
-          :contentDisposition => ContentDisposition
+          :contentType => MediaType
         }
 end
 
@@ -33,8 +33,8 @@ defimpl Poison.Decoder, for: Voxbone.Model.Attachment do
   def decode(value, options) do
     value
     |> deserialize(:object, :struct, Voxbone.Model.Object, options)
-    |> deserialize(:contentType, :struct, Voxbone.Model.MediaType, options)
     |> deserialize(:dataHandler, :struct, Voxbone.Model.DataHandler, options)
     |> deserialize(:contentDisposition, :struct, Voxbone.Model.ContentDisposition, options)
+    |> deserialize(:contentType, :struct, Voxbone.Model.MediaType, options)
   end
 end

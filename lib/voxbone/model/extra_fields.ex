@@ -21,8 +21,8 @@ defmodule Voxbone.Model.ExtraFields do
     :placeOfBirth,
     :companyVatNumber,
     :taxCode,
-    :fiscalIdentificationCode,
     :idNumber,
+    :fiscalIdentificationCode,
     :state
   ]
 
@@ -39,8 +39,8 @@ defmodule Voxbone.Model.ExtraFields do
           :placeOfBirth => String.t(),
           :companyVatNumber => String.t(),
           :taxCode => String.t(),
-          :fiscalIdentificationCode => String.t(),
           :idNumber => String.t(),
+          :fiscalIdentificationCode => String.t(),
           :state => String.t()
         }
 end

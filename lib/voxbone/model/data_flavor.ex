@@ -11,6 +11,8 @@ defmodule Voxbone.Model.DataFlavor do
   defstruct [
     :mimeType,
     :humanPresentableName,
+    :primaryType,
+    :subType,
     :mimeTypeSerializedObject,
     :defaultRepresentationClassAsString,
     :representationClassInputStream,
@@ -22,14 +24,14 @@ defmodule Voxbone.Model.DataFlavor do
     :flavorSerializedObjectType,
     :flavorRemoteObjectType,
     :flavorJavaFileListType,
-    :flavorTextType,
-    :primaryType,
-    :subType
+    :flavorTextType
   ]
 
   @type t :: %__MODULE__{
           :mimeType => String.t(),
           :humanPresentableName => String.t(),
+          :primaryType => String.t(),
+          :subType => String.t(),
           :mimeTypeSerializedObject => boolean(),
           :defaultRepresentationClassAsString => String.t(),
           :representationClassInputStream => boolean(),
@@ -41,9 +43,7 @@ defmodule Voxbone.Model.DataFlavor do
           :flavorSerializedObjectType => boolean(),
           :flavorRemoteObjectType => boolean(),
           :flavorJavaFileListType => boolean(),
-          :flavorTextType => boolean(),
-          :primaryType => String.t(),
-          :subType => String.t()
+          :flavorTextType => boolean()
         }
 end
 
