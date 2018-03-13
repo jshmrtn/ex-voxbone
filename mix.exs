@@ -62,6 +62,8 @@ defmodule Voxbone.MixProject do
     [
       update_client: [
         &update_client/1,
+        "format",
+        &apply_client_patch/1,
         "format"
       ]
     ]
@@ -99,5 +101,9 @@ defmodule Voxbone.MixProject do
     after
       File.rm_rf!(tmp_dir)
     end
+  end
+
+  defp apply_client_patch(_) do
+    {_, 0} = System.cmd("git", ["apply", "fix.patch"])
   end
 end

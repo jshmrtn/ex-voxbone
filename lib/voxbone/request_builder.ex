@@ -100,6 +100,15 @@ defmodule Voxbone.RequestBuilder do
     )
   end
 
+  def add_param(request, :file, name, {data, filename, opts}) do
+    request
+    |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
+    |> Map.update!(
+      :body,
+      &Tesla.Multipart.add_file_content(&1, data, filename, opts ++ [name: name])
+    )
+  end
+
   def add_param(request, :file, name, path) do
     request
     |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)

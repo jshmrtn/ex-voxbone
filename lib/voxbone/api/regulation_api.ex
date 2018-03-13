@@ -17,9 +17,9 @@ defmodule Voxbone.Api.RegulationAPI do
   ## Parameters
 
   - connection (Voxbone.Connection): Connection to server
-  - body2 (Attachment): The proof of identity document.
+  - body2 (file): The proof of identity document.
   - opts (KeywordList): [optional] Optional parameters
-    - :body (CreateProofOfIdRequest): 
+    - :body (CreateProofOfIdRequest):
 
   ## Returns
 
@@ -28,12 +28,12 @@ defmodule Voxbone.Api.RegulationAPI do
   """
   @spec create_proof_of_identity_document(
           Tesla.Env.client(),
-          Voxbone.Model.Attachment.t(),
+          Path.t() | {binary, String.t(), Keyword.t()},
           keyword()
         ) :: {:ok, Voxbone.Model.CreateProofOfIdResponse.t()} | {:error, Tesla.Env.t()}
   def create_proof_of_identity_document(connection, body2, opts \\ []) do
     optional_params = %{
-      :body => :body
+      :body => :file
     }
 
     %{}
@@ -55,8 +55,8 @@ defmodule Voxbone.Api.RegulationAPI do
   - connection (Voxbone.Connection): Connection to server
   - opts (KeywordList): [optional] Optional parameters
     - :create_regulation_address_request (CreateRegulationAddressRequest): Request parameters
-    - :proof_of_identity_document (Attachment): Proof of identity document
-    - :body ([Attachment]): This is an element represented by an attachment to the request sent for the creation and upload of a proof of address. The content ID can be any name different than createRegulationAddressRequest and proofOfIdentityDocument. For REST requests, multipart/form-data should be used as a media type.
+    - :proof_of_identity_document (file): Proof of identity document
+    - :body ([file]): This is an element represented by an attachment to the request sent for the creation and upload of a proof of address. The content ID can be any name different than createRegulationAddressRequest and proofOfIdentityDocument. For REST requests, multipart/form-data should be used as a media type.
 
   ## Returns
 
@@ -68,8 +68,8 @@ defmodule Voxbone.Api.RegulationAPI do
   def create_regulation_address(connection, opts \\ []) do
     optional_params = %{
       :createRegulationAddressRequest => :body,
-      :proofOfIdentityDocument => :body,
-      :body => :body
+      :proofOfIdentityDocument => :file,
+      :body => :file
     }
 
     %{}
@@ -177,7 +177,7 @@ defmodule Voxbone.Api.RegulationAPI do
 
   - connection (Voxbone.Connection): Connection to server
   - regulation_address_id (integer()): The ID of the regulation address.
-  - body (LinkRegulationAddressRequest): 
+  - body (LinkRegulationAddressRequest):
   - opts (KeywordList): [optional] Optional parameters
 
   ## Returns
@@ -329,7 +329,7 @@ defmodule Voxbone.Api.RegulationAPI do
 
   - connection (Voxbone.Connection): Connection to server
   - opts (KeywordList): [optional] Optional parameters
-    - :body (LinkRegulationAddressRequest): 
+    - :body (LinkRegulationAddressRequest):
 
   ## Returns
 
@@ -361,7 +361,7 @@ defmodule Voxbone.Api.RegulationAPI do
   - connection (Voxbone.Connection): Connection to server
   - regulation_address_id (integer()): The identifier of the regulation address.
   - opts (KeywordList): [optional] Optional parameters
-    - :body ([Attachment]): List of documents - the first one will be set as proof of address.
+    - :body ([file]): List of documents - the first one will be set as proof of address.
 
   ## Returns
 
@@ -372,7 +372,7 @@ defmodule Voxbone.Api.RegulationAPI do
           {:ok, Voxbone.Model.UploadProofOfAddressResponse.t()} | {:error, Tesla.Env.t()}
   def upload_proof_of_address(connection, regulation_address_id, opts \\ []) do
     optional_params = %{
-      :body => :body
+      :body => :file
     }
 
     %{}
