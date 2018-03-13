@@ -13,7 +13,7 @@ defmodule Voxbone.Connection do
 
   use Tesla
 
-  adapter :hackney
+  adapter(:hackney)
 
   # Add any middleware here (authentication)
   plug(Tesla.Middleware.Headers, %{
