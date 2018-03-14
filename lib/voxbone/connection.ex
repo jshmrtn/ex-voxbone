@@ -8,7 +8,8 @@ defmodule Voxbone.Connection do
   """
 
   @base_url %{
-    sandbox: "https://sandbox.voxbone.com/ws-voxbone/services/rest/"
+    sandbox: "https://sandbox.voxbone.com/ws-voxbone/services/rest/",
+    production: "https://api.voxbone.com/ws-voxbone/services/rest"
   }
 
   use Tesla
