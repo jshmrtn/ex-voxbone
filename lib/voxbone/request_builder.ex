@@ -84,7 +84,7 @@ defmodule Voxbone.RequestBuilder do
   Map
   """
   @spec add_param(map(), atom, atom, any()) :: map()
-  def add_param(request, :body, :body, value), do: Map.put(request, :body, value)
+  def add_param(request, :body, :body, value), do: Map.put(request, :body, strip_nil(value))
 
   def add_param(request, :body, key, value) do
     request
@@ -94,8 +94,8 @@ defmodule Voxbone.RequestBuilder do
       &Tesla.Multipart.add_field(
         &1,
         key,
-        Poison.encode!(value),
-        headers: [{:"Content-Type", "application/json"}]
+        Poison.encode!(strip_nil(value)),
+        headers: [{:"Content-Type", "application/json"}, {:"Content-ID", to_string(key)}]
       )
     )
   end
@@ -122,6 +122,34 @@ defmodule Voxbone.RequestBuilder do
 
   def add_param(request, location, key, value) do
     Map.update(request, location, [{key, value}], &(&1 ++ [{key, value}]))
+  end
+
+  defp strip_nil(%{__struct__: _} = value) do
+    value
+    |> Map.from_struct()
+    |> strip_nil
+  end
+
+  defp strip_nil(%{} = value) do
+    value
+    |> Enum.reject(fn
+      {_, nil} -> true
+      {_, _} -> false
+    end)
+    |> Enum.map(fn {key, value} ->
+      {key, strip_nil(value)}
+    end)
+    |> Enum.into(%{})
+  end
+
+  defp strip_nil(values) when is_list(values) do
+    values
+    |> Enum.reject(&is_nil/1)
+    |> Enum.map(&strip_nil/1)
+  end
+
+  defp strip_nil(other) do
+    other
   end
 
   @doc """

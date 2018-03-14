@@ -4,16 +4,16 @@ index 71f9036..dedb7e7 100644
 +++ b/lib/voxbone/api/regulation_api.ex
 @@ -17,9 +17,9 @@ defmodule Voxbone.Api.RegulationAPI do
    ## Parameters
- 
+
    - connection (Voxbone.Connection): Connection to server
 -  - body2 (Attachment): The proof of identity document.
 +  - body2 (file): The proof of identity document.
    - opts (KeywordList): [optional] Optional parameters
--    - :body (CreateProofOfIdRequest): 
+-    - :body (CreateProofOfIdRequest):
 +    - :body (CreateProofOfIdRequest):
- 
+
    ## Returns
- 
+
 @@ -28,12 +28,12 @@ defmodule Voxbone.Api.RegulationAPI do
    """
    @spec create_proof_of_identity_document(
@@ -27,7 +27,7 @@ index 71f9036..dedb7e7 100644
 -      :body => :body
 +      :body => :file
      }
- 
+
      %{}
 @@ -55,8 +55,8 @@ defmodule Voxbone.Api.RegulationAPI do
    - connection (Voxbone.Connection): Connection to server
@@ -37,9 +37,9 @@ index 71f9036..dedb7e7 100644
 -    - :body ([Attachment]): This is an element represented by an attachment to the request sent for the creation and upload of a proof of address. The content ID can be any name different than createRegulationAddressRequest and proofOfIdentityDocument. For REST requests, multipart/form-data should be used as a media type.
 +    - :proof_of_identity_document (file): Proof of identity document
 +    - :body ([file]): This is an element represented by an attachment to the request sent for the creation and upload of a proof of address. The content ID can be any name different than createRegulationAddressRequest and proofOfIdentityDocument. For REST requests, multipart/form-data should be used as a media type.
- 
+
    ## Returns
- 
+
 @@ -68,8 +68,8 @@ defmodule Voxbone.Api.RegulationAPI do
    def create_regulation_address(connection, opts \\ []) do
      optional_params = %{
@@ -49,35 +49,35 @@ index 71f9036..dedb7e7 100644
 +      :proofOfIdentityDocument => :file,
 +      :body => :file
      }
- 
+
      %{}
 @@ -177,7 +177,7 @@ defmodule Voxbone.Api.RegulationAPI do
- 
+
    - connection (Voxbone.Connection): Connection to server
    - regulation_address_id (integer()): The ID of the regulation address.
--  - body (LinkRegulationAddressRequest): 
+-  - body (LinkRegulationAddressRequest):
 +  - body (LinkRegulationAddressRequest):
    - opts (KeywordList): [optional] Optional parameters
- 
+
    ## Returns
 @@ -329,7 +329,7 @@ defmodule Voxbone.Api.RegulationAPI do
- 
+
    - connection (Voxbone.Connection): Connection to server
    - opts (KeywordList): [optional] Optional parameters
--    - :body (LinkRegulationAddressRequest): 
+-    - :body (LinkRegulationAddressRequest):
 +    - :body (LinkRegulationAddressRequest):
- 
+
    ## Returns
- 
+
 @@ -361,7 +361,7 @@ defmodule Voxbone.Api.RegulationAPI do
    - connection (Voxbone.Connection): Connection to server
    - regulation_address_id (integer()): The identifier of the regulation address.
    - opts (KeywordList): [optional] Optional parameters
 -    - :body ([Attachment]): List of documents - the first one will be set as proof of address.
 +    - :body ([file]): List of documents - the first one will be set as proof of address.
- 
+
    ## Returns
- 
+
 @@ -372,7 +372,7 @@ defmodule Voxbone.Api.RegulationAPI do
            {:ok, Voxbone.Model.UploadProofOfAddressResponse.t()} | {:error, Tesla.Env.t()}
    def upload_proof_of_address(connection, regulation_address_id, opts \\ []) do
@@ -85,16 +85,32 @@ index 71f9036..dedb7e7 100644
 -      :body => :body
 +      :body => :file
      }
- 
+
      %{}
 diff --git a/lib/voxbone/request_builder.ex b/lib/voxbone/request_builder.ex
-index 480cb29..ffc513d 100644
+index 480cb29..6c1386d 100644
 --- a/lib/voxbone/request_builder.ex
 +++ b/lib/voxbone/request_builder.ex
-@@ -100,6 +100,15 @@ defmodule Voxbone.RequestBuilder do
+@@ -84,7 +84,7 @@ defmodule Voxbone.RequestBuilder do
+   Map
+   """
+   @spec add_param(map(), atom, atom, any()) :: map()
+-  def add_param(request, :body, :body, value), do: Map.put(request, :body, value)
++  def add_param(request, :body, :body, value), do: Map.put(request, :body, strip_nil(value))
+
+   def add_param(request, :body, key, value) do
+     request
+@@ -94,12 +94,21 @@ defmodule Voxbone.RequestBuilder do
+       &Tesla.Multipart.add_field(
+         &1,
+         key,
+-        Poison.encode!(value),
++        Poison.encode!(strip_nil(value)),
+         headers: [{:"Content-Type", "application/json"}]
+       )
      )
    end
- 
+
 +  def add_param(request, :file, name, {data, filename, opts}) do
 +    request
 +    |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
@@ -107,3 +123,37 @@ index 480cb29..ffc513d 100644
    def add_param(request, :file, name, path) do
      request
      |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
+@@ -115,6 +124,34 @@ defmodule Voxbone.RequestBuilder do
+     Map.update(request, location, [{key, value}], &(&1 ++ [{key, value}]))
+   end
+
++  defp strip_nil(%{__struct__: _} = value) do
++    value
++    |> Map.from_struct()
++    |> strip_nil
++  end
++
++  defp strip_nil(%{} = value) do
++    value
++    |> Enum.reject(fn
++      {_, nil} -> true
++      {_, _} -> false
++    end)
++    |> Enum.map(fn {key, value} ->
++      {key, strip_nil(value)}
++    end)
++    |> Enum.into(%{})
++  end
++
++  defp strip_nil(values) when is_list(values) do
++    values
++    |> Enum.reject(&is_nil/1)
++    |> Enum.map(&strip_nil/1)
++  end
++
++  defp strip_nil(other) do
++    other
++  end
++
+   @doc """
+   Handle the response for a Tesla request
