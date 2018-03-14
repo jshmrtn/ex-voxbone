@@ -35,13 +35,22 @@ defmodule Voxbone.Connection do
   def new do
     base_url = Map.fetch!(@base_url, Application.get_env(:voxbone, :environment, :sandbox))
 
-    Tesla.build_client([
+    middleware = [
       {Tesla.Middleware.BaseUrl, base_url},
       {Tesla.Middleware.BasicAuth,
        %{
          username: Application.fetch_env!(:voxbone, :username),
          password: Application.fetch_env!(:voxbone, :password)
        }}
-    ])
+    ]
+
+    middleware =
+      if Application.get_env(:voxbone, :debug, false) do
+        middleware ++ [Tesla.Middleware.DebugLogger]
+      else
+        middleware
+      end
+
+    Tesla.build_client(middleware)
   end
 end
