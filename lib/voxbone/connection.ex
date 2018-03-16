@@ -16,14 +16,6 @@ defmodule Voxbone.Connection do
 
   adapter(:hackney)
 
-  # Add any middleware here (authentication)
-  plug(Tesla.Middleware.Headers, %{
-    "User-Agent" => "Elixir",
-    "Accept" => "application/json"
-  })
-
-  plug(Tesla.Middleware.EncodeJson)
-
   @doc """
   Configure an authless client connection
 
@@ -41,6 +33,12 @@ defmodule Voxbone.Connection do
        %{
          username: Application.fetch_env!(:voxbone, :username),
          password: Application.fetch_env!(:voxbone, :password)
+       }},
+      Tesla.Middleware.EncodeJson,
+      {Tesla.Middleware.Headers,
+       %{
+         "User-Agent" => "Elixir",
+         "Accept" => "application/json"
        }},
       {Tesla.Middleware.Timeout, timeout: Application.get_env(:voxbone, :timeout, 10_000)}
     ]
