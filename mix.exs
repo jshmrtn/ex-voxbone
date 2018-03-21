@@ -50,7 +50,7 @@ defmodule Voxbone.MixProject do
       {:tesla, "~> 0.8"},
       {:exvcr, "~> 0.9", only: :test},
       {:inch_ex, "~> 0.5", only: [:docs]},
-      {:hackney, "~> 1.6"},
+      {:ibrowse, "~> 4.4"},
       {:ex_doc, ">= 0.0.0", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.4", only: [:dev, :test], runtime: false},
       {:credo, "~> 0.5", only: [:dev, :test], runtime: false},

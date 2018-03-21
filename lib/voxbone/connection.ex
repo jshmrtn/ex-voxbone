@@ -14,7 +14,7 @@ defmodule Voxbone.Connection do
 
   use Tesla
 
-  adapter(:hackney)
+  adapter(:ibrowse)
 
   @doc """
   Configure an authless client connection
