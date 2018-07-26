@@ -3,8 +3,8 @@ defmodule Voxbone.ConnectionTest do
 
   use ExUnit.Case, async: false
 
-  alias Voxbone.Connection
   alias Voxbone.Api.Inventory
+  alias Voxbone.Connection
   alias Voxbone.Model.ListCountryResponse
 
   use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
