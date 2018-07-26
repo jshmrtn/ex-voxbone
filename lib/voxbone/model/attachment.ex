@@ -12,8 +12,8 @@ defmodule Voxbone.Model.Attachment do
     :headers,
     :object,
     :dataHandler,
-    :contentDisposition,
     :contentId,
+    :contentDisposition,
     :contentType
   ]
 
@@ -21,8 +21,8 @@ defmodule Voxbone.Model.Attachment do
           :headers => %{optional(String.t()) => [String.t()]},
           :object => Object,
           :dataHandler => DataHandler,
-          :contentDisposition => ContentDisposition,
           :contentId => String.t(),
+          :contentDisposition => ContentDisposition,
           :contentType => MediaType
         }
 end

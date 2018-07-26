@@ -12,9 +12,9 @@ defmodule Voxbone.Model.DataHandler do
     :dataSource,
     :transferDataFlavors,
     :preferredCommands,
+    :allCommands,
     :contentType,
     :outputStream,
-    :allCommands,
     :name,
     :inputStream,
     :content
@@ -24,9 +24,9 @@ defmodule Voxbone.Model.DataHandler do
           :dataSource => DataSource,
           :transferDataFlavors => [DataFlavor],
           :preferredCommands => [CommandInfo],
+          :allCommands => [CommandInfo],
           :contentType => String.t(),
           :outputStream => OutputStream,
-          :allCommands => [CommandInfo],
           :name => String.t(),
           :inputStream => InputStream,
           :content => Object
@@ -41,8 +41,8 @@ defimpl Poison.Decoder, for: Voxbone.Model.DataHandler do
     |> deserialize(:dataSource, :struct, Voxbone.Model.DataSource, options)
     |> deserialize(:transferDataFlavors, :list, Voxbone.Model.DataFlavor, options)
     |> deserialize(:preferredCommands, :list, Voxbone.Model.CommandInfo, options)
-    |> deserialize(:outputStream, :struct, Voxbone.Model.OutputStream, options)
     |> deserialize(:allCommands, :list, Voxbone.Model.CommandInfo, options)
+    |> deserialize(:outputStream, :struct, Voxbone.Model.OutputStream, options)
     |> deserialize(:inputStream, :struct, Voxbone.Model.InputStream, options)
     |> deserialize(:content, :struct, Voxbone.Model.Object, options)
   end

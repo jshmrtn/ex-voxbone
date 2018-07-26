@@ -29,7 +29,8 @@ defmodule Voxbone.Model.SingleDidConfigurationRequest do
     :smsOutbound,
     :webRtcEnabled,
     :limitChannels,
-    :voxoutInternationalEnabled
+    :voxoutInternationalEnabled,
+    :voxoutNationalEnabled
   ]
 
   @type t :: %__MODULE__{
@@ -53,7 +54,8 @@ defmodule Voxbone.Model.SingleDidConfigurationRequest do
           :smsOutbound => boolean(),
           :webRtcEnabled => boolean(),
           :limitChannels => String.t(),
-          :voxoutInternationalEnabled => boolean()
+          :voxoutInternationalEnabled => boolean(),
+          :voxoutNationalEnabled => boolean()
         }
 end
 

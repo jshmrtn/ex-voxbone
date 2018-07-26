@@ -9,13 +9,13 @@ defmodule Voxbone.Model.CommandInfo do
 
   @derive [Poison.Encoder]
   defstruct [
-    :commandClass,
-    :commandName
+    :commandName,
+    :commandClass
   ]
 
   @type t :: %__MODULE__{
-          :commandClass => String.t(),
-          :commandName => String.t()
+          :commandName => String.t(),
+          :commandClass => String.t()
         }
 end
 

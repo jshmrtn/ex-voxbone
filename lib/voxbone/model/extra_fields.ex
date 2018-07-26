@@ -11,8 +11,8 @@ defmodule Voxbone.Model.ExtraFields do
   defstruct [
     :title,
     :province,
-    :lastName,
     :firstName,
+    :lastName,
     :streetCode,
     :municipalityCode,
     :nationality,
@@ -29,8 +29,8 @@ defmodule Voxbone.Model.ExtraFields do
   @type t :: %__MODULE__{
           :title => String.t(),
           :province => String.t(),
-          :lastName => String.t(),
           :firstName => String.t(),
+          :lastName => String.t(),
           :streetCode => String.t(),
           :municipalityCode => String.t(),
           :nationality => String.t(),

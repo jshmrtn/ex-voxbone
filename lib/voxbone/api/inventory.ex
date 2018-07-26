@@ -123,6 +123,8 @@ defmodule Voxbone.Api.Inventory do
     - :delivery_id (integer()): The identifier of the pop the numbers are mapped to.
     - :sms_outbound (boolean()): Allows you to filter your DIDs that you have enabled for outbound SMS (the feature is only available for accounts that are registered for the SMS outbound service).
     - :web_rtc_enabled (boolean()): Indicates whether the DID is enabled for WebRTC use (the feature is only available for accounts that are registered for the WebRTC service).
+    - :voxout_national_enabled (boolean()): Indicates whether the DID is enabled for voxoutNational use (the feature is only available for accounts that are registered for the voxoutNational service).
+    - :voxout_international_enabled (boolean()): Indicates whether the DID is enabled for voxoutInternational use (the feature is only available for accounts that are registered for the voxoutInternational service).
 
   ## Returns
 
@@ -147,7 +149,9 @@ defmodule Voxbone.Api.Inventory do
       :portingReference => :query,
       :deliveryId => :query,
       :smsOutbound => :query,
-      :webRtcEnabled => :query
+      :webRtcEnabled => :query,
+      :voxoutNationalEnabled => :query,
+      :voxoutInternationalEnabled => :query
     }
 
     %{}

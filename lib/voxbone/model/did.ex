@@ -35,7 +35,9 @@ defmodule Voxbone.Model.Did do
     :blockCellular,
     :blockPayphone,
     :smsOutbound,
-    :webRtc
+    :webRtc,
+    :voxoutNational,
+    :voxoutInternationalEnabled
   ]
 
   @type t :: %__MODULE__{
@@ -65,7 +67,9 @@ defmodule Voxbone.Model.Did do
           :blockCellular => boolean(),
           :blockPayphone => boolean(),
           :smsOutbound => boolean(),
-          :webRtc => boolean()
+          :webRtc => boolean(),
+          :voxoutNational => String.t(),
+          :voxoutInternationalEnabled => boolean()
         }
 end
 
