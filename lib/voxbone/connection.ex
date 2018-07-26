@@ -41,7 +41,8 @@ defmodule Voxbone.Connection do
        %{
          username: Application.fetch_env!(:voxbone, :username),
          password: Application.fetch_env!(:voxbone, :password)
-       }}
+       }},
+      {Tesla.Middleware.Timeout, timeout: Application.get_env(:voxbone, :timeout, 10_000)}
     ]
 
     middleware =
